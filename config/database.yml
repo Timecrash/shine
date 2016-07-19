@@ -19,6 +19,7 @@ default: &default
   encoding: unicode
   username: shine
   password: shine
+  host: localhost
   pool: 5
 
 development:
