@@ -28,7 +28,7 @@
           ng-repeat="customer in customers">
         <h3 class="pull-right">
           <small class="text-uppercase">Joined</small>
-          {{ customer.created_at }}
+          {{ customer.created_at | date }}
         </h3>
         <h2 class="h3">
           {{ customer.first_name }} {{ customer.last_name }}
