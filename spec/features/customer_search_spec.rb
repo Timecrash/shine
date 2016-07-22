@@ -50,7 +50,7 @@ feature 'Customer Search' do
   end
   
   scenario "Search by Email" do
-    within "selection.search-form" do
+    within "section.search-form" do
       fill_in "keywords", with: "bob123@somewhere.net"
     end
     within "section.search-results" do
@@ -65,7 +65,6 @@ feature 'Customer Search' do
       
       expect(page.all("ol li.list-group-item")[3]).to have_content("Bob")
       expect(page.all("ol li.list-group-item")[3]).to have_content("Johnson")
-
     end
   end
 end
