@@ -38,5 +38,11 @@ describe("CustomerSearchController", function() {
     it("defaults to an empty customer list", function() {
       expect(scope.customers).toEqualData([]);
     });
+    
+    it("populates the customer list with the results", function() {
+      scope.search("bob");
+      httpBackend.flush();
+      expect(scope.customers).toEqualData(serverResults);
+    });
   });
 });
