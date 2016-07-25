@@ -1,5 +1,7 @@
+// In the beginning, there was var app...
 var app = angular.module('customers', ['ngRoute', 'templates']);
 
+// Router
 app.config(["$routeProvider", function($routeProvider) {
   $routeProvider.when("/", {
     controller: "CustomerSearchController",
@@ -10,6 +12,7 @@ app.config(["$routeProvider", function($routeProvider) {
   });
 }]);
 
+// Controllers
 app.controller("CustomerSearchController", ["$scope","$http", "$location", 
                                     function($scope , $http ,  $location) {
   var page = 0;
