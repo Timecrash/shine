@@ -1,6 +1,24 @@
 describe("CustomerSearchController", function() {
   describe("Initialization", function() {
     var scope       = null,
+        controller  = null;
+        
+    beforeEach(module("customers"));
+        
+    beforeEach(inject(function($controller, $rootScope) {
+      scope      = $rootScope.$new();
+      controller = $controller("CustomerSearchController", {
+        $scope: scope
+      });
+    }));
+    
+    it("defaults to an empty customer list", function() {
+      expect(scope.customers).toEqualData([]);
+    });
+  });
+  
+  describe("Fetching Search Results", function() {
+    var scope       = null,
         controller  = null,
         httpBackend = null,
         serverResults = [
@@ -19,14 +37,9 @@ describe("CustomerSearchController", function() {
             username: "bobbyj"
           }
         ];
-        
+    
     beforeEach(module("customers"));
     
-    beforeEach(function() {
-      httpBackend.when('GET','/customers.json?keywords=bob&page=0').
-                  respond(serverResults);
-    });
-        
     beforeEach(inject(function($controller, $rootScope, $httpBackend) {
       scope       = $rootScope.$new();
       httpBackend = $httpBackend;
@@ -35,8 +48,9 @@ describe("CustomerSearchController", function() {
       });
     }));
     
-    it("defaults to an empty customer list", function() {
-      expect(scope.customers).toEqualData([]);
+    beforeEach(function() {
+      httpBackend.when('GET','/customers.json?keywords=bob&page=0').
+                  respond(serverResults);
     });
     
     it("populates the customer list with the results", function() {
