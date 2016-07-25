@@ -59,4 +59,49 @@ describe("CustomerSearchController", function() {
       expect(scope.customers).toEqualData(serverResults);
     });
   });
+  
+  describe("Error Handling", function() {
+    var scope       = null,
+        controller  = null,
+        httpBackend = null,
+        serverResults = [
+          {
+            id: 123,
+            first_name: "Bob",
+            last_name: "Jones",
+            email: "bjones@foo.net",
+            username: "jonsey"
+          },
+          {
+            id: 456,
+            first_name: "Bob",
+            last_name: "Johnsons",
+            email: "johnboy@bar.info",
+            username: "bobbyj"
+          }
+        ];
+    
+    beforeEach(module("customers"));
+    
+    beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+      scope       = $rootScope.$new();
+      httpBackend = $httpBackend;
+      controller  = $controller("CustomerSearchController", {
+        $scope: scope
+      });
+    }));
+    
+    beforeEach(function() {
+      httpBackend.when('GET','/customers.json?keywords=bob&page=0').
+                  respond(500, 'Internal Server Error');
+      spyOn(window, "alert");
+    });
+    
+    it("alerts the user on an error", function() {
+      scope.search("bob");
+      httpBackend.flush();
+      expect(scope.customers).toEqualData([]);
+      expect(window.alert).toHaveBeenCalledWith("There was a problem: 500");
+    });
+  });
 });
