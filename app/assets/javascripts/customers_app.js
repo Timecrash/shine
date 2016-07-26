@@ -18,6 +18,7 @@ app.controller("CustomerSearchController", ["$scope","$http", "$location",
   var page = 0;
   $scope.customers = [];
   
+  // Controller methods
   $scope.search = function(searchTerm) {
     if (searchTerm.length < 3) { return; }
     
