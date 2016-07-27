@@ -12,7 +12,7 @@ class CreateCustomerDetailsMaterializedView < ActiveRecord::Migration
           billing_address.id        AS billing_address_id,
           billing_address.street    AS billing_street,
           billing_address.city      AS billing_city,
-          billing_address.state     AS billing_state,
+          billing_state.code        AS billing_state,
           billing_address.zipcode   AS billing_zipcode,
           shipping_address.id       AS shipping_address_id,
           shipping_address.street   AS shipping_street,
