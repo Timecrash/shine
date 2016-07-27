@@ -21,6 +21,7 @@ default: &default
   password: shine
   host: localhost
   pool: 5
+  template: template0
 
 development:
   <<: *default
