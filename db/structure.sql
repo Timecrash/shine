@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.3
+-- Dumped by pg_dump version 9.5.3
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -30,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: addresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: addresses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE addresses (
@@ -62,7 +66,7 @@ ALTER SEQUENCE addresses_id_seq OWNED BY addresses.id;
 
 
 --
--- Name: customers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: customers; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE customers (
@@ -77,7 +81,7 @@ CREATE TABLE customers (
 
 
 --
--- Name: customers_billing_addresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: customers_billing_addresses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE customers_billing_addresses (
@@ -85,60 +89,6 @@ CREATE TABLE customers_billing_addresses (
     customer_id integer NOT NULL,
     address_id integer NOT NULL
 );
-
-
---
--- Name: customers_shipping_addresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE customers_shipping_addresses (
-    id integer NOT NULL,
-    customer_id integer NOT NULL,
-    address_id integer NOT NULL,
-    "primary" boolean DEFAULT false NOT NULL
-);
-
-
---
--- Name: states; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE states (
-    id integer NOT NULL,
-    code character varying NOT NULL,
-    name character varying NOT NULL
-);
-
-
---
--- Name: customer_details; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE MATERIALIZED VIEW customer_details AS
- SELECT customers.id AS customer_id,
-    customers.first_name,
-    customers.last_name,
-    customers.email,
-    customers.username,
-    customers.created_at AS joined_at,
-    billing_address.id AS billing_address_id,
-    billing_address.street AS billing_street,
-    billing_address.city AS billing_city,
-    billing_state.code AS billing_state,
-    billing_address.zipcode AS billing_zipcode,
-    shipping_address.id AS shipping_address_id,
-    shipping_address.street AS shipping_street,
-    shipping_address.city AS shipping_city,
-    shipping_state.code AS shipping_state,
-    shipping_address.zipcode AS shipping_zipcode
-   FROM ((((((customers
-     JOIN customers_billing_addresses ON ((customers.id = customers_billing_addresses.customer_id)))
-     JOIN addresses billing_address ON ((billing_address.id = customers_billing_addresses.address_id)))
-     JOIN states billing_state ON ((billing_address.state_id = billing_state.id)))
-     JOIN customers_shipping_addresses ON (((customers.id = customers_shipping_addresses.customer_id) AND (customers_shipping_addresses."primary" = true))))
-     JOIN addresses shipping_address ON ((shipping_address.id = customers_shipping_addresses.address_id)))
-     JOIN states shipping_state ON ((shipping_address.state_id = shipping_state.id)))
-  WITH NO DATA;
 
 
 --
@@ -180,6 +130,18 @@ ALTER SEQUENCE customers_id_seq OWNED BY customers.id;
 
 
 --
+-- Name: customers_shipping_addresses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE customers_shipping_addresses (
+    id integer NOT NULL,
+    customer_id integer NOT NULL,
+    address_id integer NOT NULL,
+    "primary" boolean DEFAULT false NOT NULL
+);
+
+
+--
 -- Name: customers_shipping_addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -199,11 +161,22 @@ ALTER SEQUENCE customers_shipping_addresses_id_seq OWNED BY customers_shipping_a
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
     version character varying NOT NULL
+);
+
+
+--
+-- Name: states; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE states (
+    id integer NOT NULL,
+    code character varying NOT NULL,
+    name character varying NOT NULL
 );
 
 
@@ -227,7 +200,7 @@ ALTER SEQUENCE states_id_seq OWNED BY states.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -310,7 +283,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY addresses
@@ -318,7 +291,7 @@ ALTER TABLE ONLY addresses
 
 
 --
--- Name: customers_billing_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: customers_billing_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY customers_billing_addresses
@@ -326,7 +299,7 @@ ALTER TABLE ONLY customers_billing_addresses
 
 
 --
--- Name: customers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: customers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY customers
@@ -334,7 +307,7 @@ ALTER TABLE ONLY customers
 
 
 --
--- Name: customers_shipping_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: customers_shipping_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY customers_shipping_addresses
@@ -342,7 +315,7 @@ ALTER TABLE ONLY customers_shipping_addresses
 
 
 --
--- Name: states_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: states_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY states
@@ -350,7 +323,7 @@ ALTER TABLE ONLY states
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -358,63 +331,56 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: customer_details_customer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX customer_details_customer_id ON customer_details USING btree (customer_id);
-
-
---
--- Name: customers_lower_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: customers_lower_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX customers_lower_email ON customers USING btree (lower((email)::text));
 
 
 --
--- Name: customers_lower_first_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: customers_lower_first_name; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX customers_lower_first_name ON customers USING btree (lower((first_name)::text) varchar_pattern_ops);
 
 
 --
--- Name: customers_lower_last_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: customers_lower_last_name; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX customers_lower_last_name ON customers USING btree (lower((last_name)::text) varchar_pattern_ops);
 
 
 --
--- Name: index_customers_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_customers_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_customers_on_email ON customers USING btree (email);
 
 
 --
--- Name: index_customers_on_username; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_customers_on_username; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_customers_on_username ON customers USING btree (username);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -424,7 +390,7 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20160719163950');
 
@@ -435,6 +401,4 @@ INSERT INTO schema_migrations (version) VALUES ('20160719184339');
 INSERT INTO schema_migrations (version) VALUES ('20160720172659');
 
 INSERT INTO schema_migrations (version) VALUES ('20160726155433');
-
-INSERT INTO schema_migrations (version) VALUES ('20160727150153');
 
