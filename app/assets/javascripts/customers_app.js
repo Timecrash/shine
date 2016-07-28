@@ -54,6 +54,8 @@ app.controller("CustomerDetailController", ["$scope", "$resource", "$routeParams
   var Customer = $resource('/customers/:customerId.json');
   
   $scope.customer = Customer.get({"customerId": $scope.customerId});
+  
+  
 }]);
 
 app.controller("CustomerCreditCardController", ["$scope", "$resource",

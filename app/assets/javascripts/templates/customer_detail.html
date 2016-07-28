@@ -1,35 +1,35 @@
-<div class="row">
+<form novalidate name="form"><div class="row">
   <div class="col-md-6">
     <article class="panel panel-primary">
       <header class="panel-heading">
         <h1 class="h3">Customer</h1>
       </header>
       <section class="panel-body">
-        <form>
-          <div class="row">
-            <div class="form-group col-md-4">
-              <label class="sr-only" for="first-name">First Name</label>
-              <input type="text" class="form-control"
-                     name="first-name" ng-model="customer.first_name"> 
-            </div>
-            <div class="form-group col-md-4">
-              <label class="sr-only" for="last-name">Last Name</label>
-              <input type="text" class="form-control"
-                     name="last-name" ng-model="customer.last_name"> 
-            </div>
-            <div class="form-group col-md-4">
-              <label class="sr-only" for="username">Username</label>
-              <div class="input-group">
-                <div class="input-group-addon">@</div>
-                <input type="text" class="form-control"
-                       name="username" ng-model="customer.username"> 
-              </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label class="sr-only" for="first-name">First Name</label>
+            <input type="text" class="form-control" required
+                   name="first_name" ng-model="customer.first_name"> 
+          </div>
+          <div class="form-group col-md-4">
+            <label class="sr-only" for="last-name">Last Name</label>
+            <input type="text" class="form-control" required
+                   name="last_name" ng-model="customer.last_name"> 
+          </div>
+          <div class="form-group col-md-4">
+            <label class="sr-only" for="username">Username</label>
+            <div class="input-group">
+              <div class="input-group-addon">@</div>
+              <input type="text" class="form-control" required
+                     name="username" ng-model="customer.username"> 
             </div>
           </div>
+        </div>
+        <div class="form-group">
           <label class="sr-only" for="email">Email</label>
-          <input type="text" class="form-control"
+          <input type="email" class="form-control" required
                  name="email" ng-model="customer.email">
-        </form>
+        </div>
       </section>
       <footer class="panel-footer">
         <label for="joined">Joined</label> {{ customer.joined_at | date }}
@@ -40,35 +40,33 @@
         <h2 class="h4">Shipping Address</h2>
       </header>
       <section class="panel-body">
-        <form>
-          <div class="form-group">
-            <label class="sr-only" for="street-address">Street Address</label>
-            <input type="text" class="form-control"
-                   name="street-address" ng-model="customer.shipping_street">
+        <div class="form-group">
+          <label class="sr-only" for="street-address">Street Address</label>
+          <input type="text" class="form-control" required
+                 name="street-address" ng-model="customer.shipping_street">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="street-address-extra">Street Address Extra</label>
+          <input type="text" class="form-control"
+                 name="street-address-extra" placeholder="Apt, Unit, Suite, etc.">
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label class="sr-only" for="city">City</label>
+            <input type="text" class="form-control" required
+                   name="city" ng-model="customer.shipping_city">
           </div>
-          <div class="form-group">
-            <label class="sr-only" for="street-address-extra">Street Address Extra</label>
-            <input type="text" class="form-control"
-                   name="street-address-extra" placeholder="Apt, Unit, Suite, etc.">
+          <div class="col-md-2">
+            <label class="sr-only" for="state">State</label>
+            <input type="text" class="form-control" required pattern="[A-Z][A-Z]"
+                   name="state" ng-model="customer.shipping_state">
           </div>
-          <div class="form-group row">
-            <div class="col-md-6">
-              <label class="sr-only" for="city">City</label>
-              <input type="text" class="form-control"
-                     name="city" ng-model="customer.shipping_city">
-            </div>
-            <div class="col-md-2">
-              <label class="sr-only" for="state">State</label>
-              <input type="text" class="form-control"
-                     name="state" ng-model="customer.shipping_state">
-            </div>
-            <div class="col-md-4">
-              <label class="sr-only" for="zip">Zip</label>
-              <input type="text" class="form-control"
-                     name="zip" ng-model="customer.shipping_zipcode">
-            </div>
+          <div class="col-md-4">
+            <label class="sr-only" for="zip">Zip</label>
+            <input type="text" class="form-control" required pattern="\d\d\d\d\d"
+                   name="zip" ng-model="customer.shipping_zipcode">
           </div>
-        </form>
+        </div>
       </section>
     </article>
   </div>
@@ -119,37 +117,38 @@
               </small>
             </h1>
           </header>
-          <form>
-            <div class="form-group">
-              <label class="sr-only" for="street-address">Street Address</label>
-              <input type="text" class="form-control"
-                     name="street-address" ng-model="customer.billing_street">
+          <div class="form-group">
+            <label class="sr-only" for="street-address">Street Address</label>
+            <input type="text" class="form-control" required
+                   name="street-address" ng-model="customer.billing_street">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="street-address-extra">Street Address Extra</label>
+            <input type="text" class="form-control"
+                   name="street-address-extra" placeholder="Apt, Unit, Suite, etc.">
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label class="sr-only" for="city">City</label>
+              <input type="text" class="form-control" required
+                     name="city" ng-model="customer.billing_city">
             </div>
-            <div class="form-group">
-              <label class="sr-only" for="street-address-extra">Street Address Extra</label>
-              <input type="text" class="form-control"
-                     name="street-address-extra" placeholder="Apt, Unit, Suite, etc.">
+            <div class="col-md-2">
+              <label class="sr-only" for="state">State</label>
+              <input type="text" class="form-control" required pattern="[A-Z][A-Z]"
+                     name="state" ng-model="customer.billing_state">
             </div>
-            <div class="form-group row">
-              <div class="col-md-6">
-                <label class="sr-only" for="city">City</label>
-                <input type="text" class="form-control"
-                       name="city" ng-model="customer.billing_city">
-              </div>
-              <div class="col-md-2">
-                <label class="sr-only" for="state">State</label>
-                <input type="text" class="form-control"
-                       name="state" ng-model="customer.billing_state">
-              </div>
-              <div class="col-md-4">
-                <label class="sr-only" for="zip">Zip</label>
-                <input type="text" class="form-control"
-                       name="zip" ng-model="customer.billing_zipcode">
+            <div class="col-md-4">
+              <label class="sr-only" for="zip">Zip</label>
+              <input type="text" class="form-control" required pattern="\d\d\d\d\d"
+                     name="zip" ng-model="customer.billing_zipcode">
               </div>
             </div>
-          </form>
         </article>
       </section>
     </article>
+    <div class="text-right">
+      <button ng-click="save()" class="btn btn-lg btn-primary">Save Changes</button>
+    </div>
   </div>
-</div>
+</div></form>
