@@ -1,5 +1,6 @@
 // In the beginning, there was var app...
-var app = angular.module('customers', ['ngRoute', 'ngResource', 'templates']);
+var app = angular.module('customers',
+                        ['ngRoute', 'ngResource', 'ngMessages', 'templates']);
 
 // Router
 app.config(["$routeProvider", function($routeProvider) {
