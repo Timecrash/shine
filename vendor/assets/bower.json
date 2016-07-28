@@ -4,7 +4,8 @@
     "bootstrap-sass-official": "latest",
     "angular": "~> 1.5",
     "angular-mocks": "latest",
-    "angular-route": "latest"
+    "angular-route": "latest",
+    "angular-resource": "latest"
   },
   "resolutions": {
     "angular": "~> 1.5"
