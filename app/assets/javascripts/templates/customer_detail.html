@@ -10,18 +10,27 @@
             <label class="sr-only" for="first-name">First Name</label>
             <input type="text" class="form-control" required
                    name="first_name" ng-model="customer.first_name"> 
+            <p class="help-block" ng-messages="form.first_name.$error">
+              <span ng-message="required">First Name is required</span>
+            </p>
           </div>
           <div class="form-group col-md-4">
             <label class="sr-only" for="last-name">Last Name</label>
             <input type="text" class="form-control" required
-                   name="last_name" ng-model="customer.last_name"> 
+                   name="last_name" ng-model="customer.last_name">
+            <p class="help-block" ng-messages="form.last_name.$error">
+              <span ng-message="required">Last Name is required</span>
+            </p>
           </div>
           <div class="form-group col-md-4">
             <label class="sr-only" for="username">Username</label>
             <div class="input-group">
               <div class="input-group-addon">@</div>
               <input type="text" class="form-control" required
-                     name="username" ng-model="customer.username"> 
+                     name="username" ng-model="customer.username">
+              <p class="help-block" ng-messages="form.username.$error">
+                <span ng-message="required">Username is required</span>
+              </p>
             </div>
           </div>
         </div>
@@ -29,6 +38,10 @@
           <label class="sr-only" for="email">Email</label>
           <input type="email" class="form-control" required
                  name="email" ng-model="customer.email">
+          <p class="help-block" ng-messages="form.email.$error">
+            <span ng-message="required">Email is required</span>
+            <span ng-message="email">Email must look like an email</span>
+          </p>
         </div>
       </section>
       <footer class="panel-footer">
@@ -43,28 +56,37 @@
         <div class="form-group">
           <label class="sr-only" for="street-address">Street Address</label>
           <input type="text" class="form-control" required
-                 name="street-address" ng-model="customer.shipping_street">
-        </div>
-        <div class="form-group">
-          <label class="sr-only" for="street-address-extra">Street Address Extra</label>
-          <input type="text" class="form-control"
-                 name="street-address-extra" placeholder="Apt, Unit, Suite, etc.">
+                 name="shippingStreet" ng-model="customer.shipping_street">
+          <p class="help-block" ng-messages="form.shippingStreet.$error">
+            <span ng-message="required">Street is required</span>
+          </p>
         </div>
         <div class="form-group row">
           <div class="col-md-6">
             <label class="sr-only" for="city">City</label>
             <input type="text" class="form-control" required
-                   name="city" ng-model="customer.shipping_city">
+                   name="shippingCity" ng-model="customer.shipping_city">
+            <p class="help-block" ng-messages="form.shippingCity.$error">
+              <span ng-message="required">City is required</span>
+            </p>
           </div>
           <div class="col-md-2">
             <label class="sr-only" for="state">State</label>
             <input type="text" class="form-control" required pattern="[A-Z][A-Z]"
-                   name="state" ng-model="customer.shipping_state">
+                   name="shippingState" ng-model="customer.shipping_state">
+            <p class="help-block" ng-messages="form.shippingState.$error">
+              <span ng-message="required">State is required</span>
+              <span ng-message="pattern">State must look like a two-letter state code</span>
+            </p>
           </div>
           <div class="col-md-4">
             <label class="sr-only" for="zip">Zip</label>
             <input type="text" class="form-control" required pattern="\d\d\d\d\d"
-                   name="zip" ng-model="customer.shipping_zipcode">
+                   name="shippingZip" ng-model="customer.shipping_zipcode">
+            <p class="help-block" ng-messages="form.shippingZip.$error">
+              <span ng-message="required">Zip is required</span>
+              <span ng-message="pattern">Zip must be five digits</span>
+            </p>
           </div>
         </div>
       </section>
@@ -113,37 +135,48 @@
             <h1 class="h5">
               Billing Address
               <small>
-                <input type="checkbox"> Same as shipping?
+                <input type="checkbox" ng-model="customer.billingSameAsShipping"> Same as shipping?
               </small>
             </h1>
           </header>
-          <div class="form-group">
-            <label class="sr-only" for="street-address">Street Address</label>
-            <input type="text" class="form-control" required
-                   name="street-address" ng-model="customer.billing_street">
-          </div>
-          <div class="form-group">
-            <label class="sr-only" for="street-address-extra">Street Address Extra</label>
-            <input type="text" class="form-control"
-                   name="street-address-extra" placeholder="Apt, Unit, Suite, etc.">
-          </div>
-          <div class="form-group row">
-            <div class="col-md-6">
-              <label class="sr-only" for="city">City</label>
+          <div ng-if="!customer.billingSameAsShipping">
+            <div class="form-group">
+              <label class="sr-only" for="street-address">Street Address</label>
               <input type="text" class="form-control" required
-                     name="city" ng-model="customer.billing_city">
+                     name="billingStreet" ng-model="customer.billing_street">
+              <p class="help-block" ng-messages="form.billingStreet.$error">
+                <span ng-message="required">Street is required</span>
+              </p>
             </div>
-            <div class="col-md-2">
-              <label class="sr-only" for="state">State</label>
-              <input type="text" class="form-control" required pattern="[A-Z][A-Z]"
-                     name="state" ng-model="customer.billing_state">
-            </div>
-            <div class="col-md-4">
-              <label class="sr-only" for="zip">Zip</label>
-              <input type="text" class="form-control" required pattern="\d\d\d\d\d"
-                     name="zip" ng-model="customer.billing_zipcode">
+            <div class="form-group row">
+              <div class="col-md-6">
+                <label class="sr-only" for="city">City</label>
+                <input type="text" class="form-control" required
+                       name="billingCity" ng-model="customer.billing_city">
+                <p class="help-block" ng-messages="form.billingCity.$error">
+                  <span ng-message="required">City is required</span>
+                </p>
+              </div>
+              <div class="col-md-2">
+                <label class="sr-only" for="state">State</label>
+                <input type="text" class="form-control" required pattern="[A-Z][A-Z]"
+                       name="billingState" ng-model="customer.billing_state">
+                <p class="help-block" ng-messages="form.billingState.$error">
+                  <span ng-message="required">State is required</span>
+                  <span ng-message="pattern">State must look like a two-letter state code</span>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <label class="sr-only" for="zip">Zip</label>
+                <input type="text" class="form-control" required pattern="\d\d\d\d\d"
+                       name="billingZip" ng-model="customer.billing_zipcode">
+                <p class="help-block" ng-messages="form.billingZip.$error">
+                  <span ng-message="required">Zip is required</span>
+                  <span ng-message="pattern">Zip must be five digits</span>
+                </p>
               </div>
             </div>
+          </div>
         </article>
       </section>
     </article>
