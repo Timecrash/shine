@@ -48,14 +48,10 @@ app.controller("CustomerSearchController", ["$scope","$http", "$location",
   };
 }]);
 
-app.controller("CustomerDetailController", ["$scope", "$http", "$routeParams",
-                                    function($scope ,  $http ,  $routeParams) {
+app.controller("CustomerDetailController", ["$scope", "$resource", "$routeParams",
+                                    function($scope ,  $resource ,  $routeParams) {
   var customerId = $routeParams.id;
-  $scope.customer = {};
+  var Customer = $resource('/customers/:customerId.json');
   
-  $http.get("/customers/" + customerId + ".json").then(function(response) {
-    $scope.customer = response.data;
-  }, function(response) {
-    alert("There was a problem: " + response.status);
-  });
+  $scope.customer = Customer.get({"customerId": customerId});
 }]);
