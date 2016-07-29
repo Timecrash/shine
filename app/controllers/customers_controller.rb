@@ -26,4 +26,8 @@ class CustomersController < ApplicationController
       format.json { render json: customer_detail }
     end
   end
+  
+  def update
+    puts params.inspect
+  end
 end
