@@ -28,6 +28,8 @@ class CustomersController < ApplicationController
   end
   
   def update
-    puts params.inspect
+    customer_detail = CustomerDetail.find(params[:id])
+    customer_detail.update(params)
+    head :ok
   end
 end
