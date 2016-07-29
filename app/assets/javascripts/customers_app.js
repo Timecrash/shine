@@ -56,7 +56,11 @@ app.controller("CustomerDetailController", ["$scope", "$resource", "$routeParams
   
   $scope.customer = Customer.get({"customerId": $scope.customerId});
   
-  
+  $scope.save = function() {
+    if ($scope.form.$valid) {
+      alert("Save!");
+    }
+  };
 }]);
 
 app.controller("CustomerCreditCardController", ["$scope", "$resource",

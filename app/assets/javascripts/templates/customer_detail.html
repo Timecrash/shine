@@ -217,7 +217,8 @@
       </section>
     </article>
     <div class="text-right">
-      <button ng-click="save()" class="btn btn-lg btn-primary">Save Changes</button>
+      <button ng-click="save()" class="btn btn-lg btn-primary"
+              ng-disabled="form.$invalid || form.$pristine">Save Changes</button>
     </div>
   </div>
 </div></form>
